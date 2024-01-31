@@ -1,14 +1,19 @@
 "use client";
 
-import { Link } from "@nextui-org/react";
 import data from "./purchaseorders.json";
-import { Button } from "@nextui-org/button";
+import OrdersList from "./components/OrdersList";
+import OrderModal from "./components/OrderModal";
+import { useDisclosure } from "@nextui-org/react";
 
 import React, { useEffect, useState } from "react";
 
 export default function Home() {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   const [purchaseOrders, setPurchaseOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedProductData, setSelectedOrderData] = useState(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -17,6 +22,14 @@ export default function Home() {
     }, 1000);
   }, []);
 
+  useEffect(() => {
+    if (selectedOrder) {
+      setSelectedOrderData(
+        purchaseOrders.find((order) => order.PurchaseOrderId === selectedOrder)
+      );
+    }
+  }, [selectedOrder]);
+
   return (
     <div className="flex justify-center items-center w-screen h-screen">
       {loading ? (
@@ -24,28 +37,18 @@ export default function Home() {
           Loading... &#40;Simulating a 1 second API call with timeout&#41;
         </div>
       ) : (
-        <div>
-          <h1 className="text-xl font-bold">Purchase Orders</h1>
-          <ul>
-            {purchaseOrders.map((order) => (
-              <li key={order.PurchaseOrderId}>
-                <a
-                  onClick={() => {
-                    console.log(
-                      "Clicked on Purchase Order: " + order.PurchaseOrderId
-                    );
-                  }}
-                  className="opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
-                >
-                  {order.PurchaseOrderTypeAbbreviation +
-                    " - " +
-                    order.PurchaseOrderId}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <OrdersList
+          purchaseOrders={purchaseOrders}
+          onOpen={onOpen}
+          setSelectedOrder={setSelectedOrder}
+        />
       )}
+      <OrderModal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        selectedOrder={selectedOrder}
+        selectedProductData={selectedProductData}
+      />
     </div>
   );
 }
