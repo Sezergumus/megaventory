@@ -12,7 +12,19 @@ function OrdersList({ purchaseOrders, onOpen, setSelectedOrder }) {
                 setSelectedOrder(order.PurchaseOrderId);
                 onOpen();
               }}
-              className="opacity-60 hover:opacity-100 transition-opacity cursor-pointer text-lg"
+              className={`opacity-80 hover:opacity-100 transition-opacity cursor-pointer text-lg
+              ${
+                order.PurchaseOrderStatus === "Cancelled"
+                  ? "text-cancelled"
+                  : ""
+              }
+                ${order.PurchaseOrderStatus === "Pending" ? "text-pending" : ""}
+                ${
+                  order.PurchaseOrderStatus === "Verified"
+                    ? "text-verified"
+                    : ""
+                }
+              `}
             >
               {order.PurchaseOrderTypeAbbreviation +
                 " - " +
@@ -21,6 +33,20 @@ function OrdersList({ purchaseOrders, onOpen, setSelectedOrder }) {
           </li>
         ))}
       </ul>
+      <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-white">
+        <div className="flex gap-2 items-center">
+          <div className="w-2 h-2 rounded-full bg-pending"></div>
+          <p>Pending</p>
+        </div>
+        <div className="flex gap-2 items-center">
+          <div className="w-2 h-2 rounded-full bg-verified"></div>
+          <p>Verified</p>
+        </div>
+        <div className="flex gap-2 items-center">
+          <div className="w-2 h-2 rounded-full bg-cancelled"></div>
+          <p>Cancelled</p>
+        </div>
+      </div>
     </div>
   );
 }

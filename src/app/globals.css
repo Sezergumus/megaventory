@@ -4,5 +4,14 @@
 
 body {
   color: white;
-  background-color: black;
+  background: rgb(82, 22, 139);
+  background: linear-gradient(
+    225deg,
+    rgba(82, 22, 139, 1) 0%,
+    rgba(39, 30, 98, 1) 15%,
+    rgba(6, 36, 66, 1) 30%,
+    rgba(6, 36, 66, 1) 70%,
+    rgba(27, 87, 91, 1) 85%,
+    rgba(23, 135, 122, 1) 100%
+  );
 }
