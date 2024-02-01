@@ -27,15 +27,21 @@ This project is a web application designed to parse and display purchase orders 
      - Red: Cancelled
 
 5. **Order Actions:**
+
    - Users can remove products from the order.
    - Users can cancel the order.
+
+6. **Sorting Table:**
+
+   - Added sorting functionality to tables.
+   - Users can sort any data (string or numeric).
 
 ## Usage
 
 1. You can clone this repository
 
 ```bash
-git clone <your_repository_url>
+git clone https://github.com/Sezergumus/megaventory.git
 ```
 
 2. I hosted it under my domain you can check it out from [here](https://megaventory.sezergumus.dev/).
