@@ -50,7 +50,15 @@ function OrderModal({
   const removeProduct = () => {
     const updatedSet = new Set(selectedProducts);
 
+    const removeAll = selectedProducts === "all";
+
     const updatedPurchaseOrders = purchaseOrders.map((order) => {
+      if (removeAll) {
+        if (order.PurchaseOrderId === selectedOrder) {
+          return { ...order, PurchaseOrderDetails: [] };
+        }
+      }
+
       const updatedDetails = order.PurchaseOrderDetails.filter((detail) => {
         return !updatedSet.has(detail.PurchaseOrderRowDetailID.toString());
       });
@@ -114,7 +122,7 @@ function OrderModal({
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              Product {selectedOrder}
+              Order {selectedOrder}
             </ModalHeader>
             <ModalBody>
               {selectedProductData && (
